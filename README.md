@@ -64,12 +64,12 @@ elkaar blijven:
 De daadwerkelijk onderschepte data, geen beschrijving ervan, staat in
 **[`bewijs/`](bewijs/)**:
 
-- [`bewijs/onboarding-upload.txt`](bewijs/onboarding-upload.txt) — de echte
+- [`bewijs/onboarding-upload.txt`](bewijs/onboarding-upload.txt), de echte
   `multipart/form-data`-upload naar `onboarding.siip.io`, met de part-headers en de
   boundary onbewerkt en de eigen paspoortgegevens per part weggelakt.
-- [`bewijs/onboarding-response.json`](bewijs/onboarding-response.json) — het echte
+- [`bewijs/onboarding-response.json`](bewijs/onboarding-response.json), het echte
   server-side profiel dat terugkwam, sleutels onbewerkt, waarden gemaskeerd.
-- [`bewijs/dg2-gezichtsfoto-geblurred.png`](bewijs/dg2-gezichtsfoto-geblurred.png) — de
+- [`bewijs/dg2-gezichtsfoto-geblurred.png`](bewijs/dg2-gezichtsfoto-geblurred.png), de
   echte gezichtsfoto uit de chip, tot een onherkenbare vlek geblurred.
 
 Zie [`bewijs/LEESMIJ.md`](bewijs/LEESMIJ.md) voor hoe deze tegen de verzegelde originelen
