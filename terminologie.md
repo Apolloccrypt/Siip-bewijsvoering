@@ -109,11 +109,6 @@ De app uit elkaar halen zonder hem te draaien. `apktool` pakt de app uit; `strin
 leesbare tekst uit de binaries. `classes.dex` is de Android-code (Kotlin); `libapp.so` is de
 Flutter-code (Dart AOT, vooraf gecompileerd).
 
-<a id="frida"></a>
-### frida / frida-gadget
-Gereedschap om tijdens het draaien code in een app te haken. De gadget is een variant die in
-een eigen herverpakte app wordt geladen en geen geroot toestel vereist.
-
 <a id="il2cpp"></a>
 ### il2cpp / UnityTls
 Bij de PSV-app (een Unity-app) loopt het netwerkverkeer via Unity's eigen code (il2cpp) en
