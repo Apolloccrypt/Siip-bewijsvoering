@@ -7,6 +7,12 @@
 # De hashlijst van de oorspronkelijke meting is met OpenTimestamps in de Bitcoin-blockchain
 # verankerd (MANIFEST-20260702.sha256.ots), zodat de meetdatum onafhankelijk vaststaat.
 
+# Gepubliceerde, geredacteerde bestanden in bewijs/ (eigen persoonsgegevens verwijderd):
+f2c043aee71034e51c98723acf6483e88b92343ea5a01ed843d07bf27ab483cf  bewijs/onboarding-upload.txt
+d3410649febd222b31d2176754f3781a417a9bd720b65d6e9f3b6fb446a3d885  bewijs/onboarding-response.json
+485a813ff46325ae77b123d8a0c52ffb2347cec4458893e7c26676dfff45b1bf  bewijs/dg2-gezichtsfoto-geblurred.png
+
+# Vaste artefacten:
 294b82eec8e22027696e7f04edad29ac4c460960b64060441807f32efbed8bb2  pec-zwolle-app-2.1.1.apk
 ce4132b66994c9b00def7a5ea04aa556b87329bc8f3eb4e3c7c6028ad04c70aa  capture_native.js
 135d121e4a21793c773018345a643e1e0e5e4ccf6ee7b6bf26cde3376f066799  capture.py

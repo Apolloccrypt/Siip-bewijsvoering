@@ -59,7 +59,23 @@ elkaar blijven:
 - **afgeleid**: het gedrag of de architectuur impliceert het, de payload zelf is niet gezien.
 - **open**: niet beslist; de vervolgmeting staat benoemd.
 
-## Inhoud
+## De afgevangen bestanden
+
+De daadwerkelijk onderschepte data, geen beschrijving ervan, staat in
+**[`bewijs/`](bewijs/)**:
+
+- [`bewijs/onboarding-upload.txt`](bewijs/onboarding-upload.txt) — de echte
+  `multipart/form-data`-upload naar `onboarding.siip.io`, met de part-headers en de
+  boundary onbewerkt en de eigen paspoortgegevens per part weggelakt.
+- [`bewijs/onboarding-response.json`](bewijs/onboarding-response.json) — het echte
+  server-side profiel dat terugkwam, sleutels onbewerkt, waarden gemaskeerd.
+- [`bewijs/dg2-gezichtsfoto-geblurred.png`](bewijs/dg2-gezichtsfoto-geblurred.png) — de
+  echte gezichtsfoto uit de chip, tot een onherkenbare vlek geblurred.
+
+Zie [`bewijs/LEESMIJ.md`](bewijs/LEESMIJ.md) voor hoe deze tegen de verzegelde originelen
+te controleren zijn.
+
+## Toelichting per app
 
 | Bestand | Onderwerp |
 |---|---|
@@ -67,7 +83,8 @@ elkaar blijven:
 | [`pec-zwolle.md`](pec-zwolle.md) | PEC Zwolle-app: de onboarding-upload op veldniveau, de MRZ-structuur, het server-profiel, de web-ticketlaag. |
 | [`psv.md`](psv.md) | PSV-app: dezelfde Siip-identiteitspijplijn, plus wallet, advertentie-stack en de Cisco-locatie-SDK. |
 | [`siip-platform.md`](siip-platform.md) | Het platform en de vloot: het white-label sjabloon, de gedeelde infrastructuur en de differentiële pinning. |
-| [`SHA256SUMS.txt`](SHA256SUMS.txt) | De SHA-256 van de vaste bewijs-artefacten. |
+| [`terminologie.md`](terminologie.md) | De vaktermen en afkortingen in gewone taal. |
+| [`SHA256SUMS.txt`](SHA256SUMS.txt) | De SHA-256 van de bestanden en de verzegelde originelen. |
 
 ## Verifiëren
 

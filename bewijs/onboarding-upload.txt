@@ -1,0 +1,41 @@
+De onderschepte onboarding-upload, gedecodeerd uit de eigen meting op het toestel.
+Dit is de echte multipart-body. De part-headers staan er onbewerkt; de inhoud van
+elk part (de eigen paspoortgegevens) is weggelakt en vervangen door de bytegrootte.
+
+POST https://onboarding.siip.io/api/   HTTP/2, TLS 1.3
+content-type: multipart/form-data; boundary=5d474873-d117-4399-a7cf-48642da9a3c1
+
+--5d474873-d117-4399-a7cf-48642da9a3c1
+Content-Disposition: form-data; name="efSodFile"; filename="efSodFile.bin"
+Content-Type: application/octet-stream
+
+    [WEGGELAKT: 2664 byte, Document Security Object (staatshandtekening)]
+
+--5d474873-d117-4399-a7cf-48642da9a3c1
+Content-Disposition: form-data; name="photoFile"; filename="photoFile.bin"
+Content-Type: application/octet-stream
+
+    [WEGGELAKT: 14869 byte, DG2 gezichtsfoto uit de chip (JPEG2000)]
+
+--5d474873-d117-4399-a7cf-48642da9a3c1
+Content-Disposition: form-data; name="appBundleId"
+
+    [WEGGELAKT: 16 byte, pakketnaam]
+
+--5d474873-d117-4399-a7cf-48642da9a3c1
+Content-Disposition: form-data; name="deviceId"
+
+    [WEGGELAKT: 36 byte, toestel-binding]
+
+--5d474873-d117-4399-a7cf-48642da9a3c1
+Content-Disposition: form-data; name="publicKey"
+
+    [WEGGELAKT: 124 byte, toestel-sleutel]
+
+--5d474873-d117-4399-a7cf-48642da9a3c1
+Content-Disposition: form-data; name="dataGroup1"; filename="dataGroup1.bin"
+Content-Type: application/octet-stream
+
+    [WEGGELAKT: 93 byte, ruwe MRZ (DG1), met het BSN in het personal-number-veld]
+
+--5d474873-d117-4399-a7cf-48642da9a3c1--

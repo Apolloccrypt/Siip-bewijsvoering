@@ -6,8 +6,10 @@ NFC-chip van het paspoort uit en uploadt de ruwe chipbestanden naar `onboarding.
 ## De onboarding-upload, op veldniveau (vastgesteld, payload)
 
 Een `multipart/form-data` POST naar `https://onboarding.siip.io/api/` over HTTP/2.
-Gelezen met de in-process TLS-tap (zie [`methodologie.md`](methodologie.md)). De losse,
-benoemde onderdelen in de upload:
+Gelezen met de in-process TLS-tap (zie [`methodologie.md`](methodologie.md)). De echte,
+gedecodeerde upload staat in [`bewijs/onboarding-upload.txt`](bewijs/onboarding-upload.txt),
+en het echte serverantwoord in [`bewijs/onboarding-response.json`](bewijs/onboarding-response.json).
+De losse, benoemde onderdelen in de upload:
 
 ```
 POST https://onboarding.siip.io/api/            multipart/form-data, HTTP/2, TLS 1.3

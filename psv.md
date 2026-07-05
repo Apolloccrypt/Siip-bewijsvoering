@@ -7,6 +7,11 @@ Het merendeel hieronder is **op codeniveau vastgesteld** (aanwezig in de binarie
 Een deel is on-device gemeten. Wat statisch is, is geen bewijs dat het ook vertrekt of
 vóór toestemming vuurt; dat staat er per punt bij.
 
+De concreet afgevangen paspoort-upload staat bij PEC Zwolle in
+[`bewijs/`](bewijs/). PSV draait dezelfde Siip-module met dezelfde endpoints en dezelfde
+datagroepen; de payload zelf loopt bij PSV over een eigen TLS-laag en is niet los
+afgevangen. De PEC-capture geldt daarom hier als de onderbouwing voor de identieke module.
+
 ## Dezelfde Siip-identiteitspijplijn (op codeniveau vastgesteld)
 
 Namespace `io.siip.packages.plugin.androidunityinterface.services`:
