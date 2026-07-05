@@ -12,8 +12,11 @@ f2c043aee71034e51c98723acf6483e88b92343ea5a01ed843d07bf27ab483cf  bewijs/onboard
 d3410649febd222b31d2176754f3781a417a9bd720b65d6e9f3b6fb446a3d885  bewijs/onboarding-response.json
 485a813ff46325ae77b123d8a0c52ffb2347cec4458893e7c26676dfff45b1bf  bewijs/dg2-gezichtsfoto-geblurred.png
 
-# Vaste artefacten:
-294b82eec8e22027696e7f04edad29ac4c460960b64060441807f32efbed8bb2  pec-zwolle-app-2.1.1.apk
+# Vaste artefacten (schone, publieke app-binaries; zo te verifieren uit de APK):
+294b82eec8e22027696e7f04edad29ac4c460960b64060441807f32efbed8bb2  pec-zwolle-2.1.1.apk (base-split)
+27bab0fec3dfd0bf1ae59cc230a9e88e5f399ee8a61e4d339a5fe354ee7a2a32  classes.dex (in de base-split)
+2033ccd1033e0e8a7f1f0d236c2b31f8482541a29537e40964756be17ec33c5d  config.arm64_v8a.apk (native-split)
+ef3cee8fb4008fc451c3e11bda132bcf9b3dd3422397b96e6f135c13d2047c84  lib/arm64-v8a/libapp.so (in de native-split)
 
 # Verzegeld, niet publiek (ongemaskeerde persoonsgegevens):
 8f60413421bfd8fd376c1b8ca8a94b46c4c0215664187105a2ea044143487aa0  onboarding_capture_siip_raw_20260702.jsonl  (verzegeld)

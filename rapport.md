@@ -65,6 +65,10 @@ vastgesteld** = aangetoond uit de binaries. **afgeleid** = gedrag impliceert het
 impact. **Hoog** = persoonsgegevens of een duidelijke normschending. **Middel** = raakt een
 beginsel of grondslag. **Informatief** = context, geen zelfstandige schending.
 
+Bij elke bevinding staat onder **Waar in de code** welke class, package of symbool het
+veroorzaakt. Bijlage C geeft per bevinding het exacte bestand (met SHA-256) en het commando
+waarmee een onafhankelijke onderzoeker dezelfde treffer krijgt uit de publieke app.
+
 ---
 
 ## F-01 · Ruwe paspoortchip (BSN, MRZ, foto, SOD) geüpload bij registratie
@@ -452,3 +456,80 @@ De hashes van de gepubliceerde en de verzegelde bestanden staan in
 OpenTimestamps in de Bitcoin-blockchain verankerd, zodat de meetdatum onafhankelijk
 vaststaat en het bewijs sinds die datum niet ongemerkt te wijzigen is. De ongemaskeerde
 originelen blijven verzegeld en niet openbaar.
+
+## Bijlage C: de binaries en hoe je de symbolen zelf terugvindt
+
+Alle code-verwijzingen in dit rapport zijn te controleren met de publiek verkrijgbare app.
+De app wordt als split-APK geleverd (Android App Bundle). Download versie 2.1.1 van
+`io.siip.saas.pec` en controleer de bestanden tegen hun hash:
+
+| Bestand | Waar | SHA-256 |
+|---|---|---|
+| base-APK | `pec-zwolle-2.1.1.apk` | `294b82ee…bed8bb2` |
+| `classes.dex` (Android/Kotlin) | in de base-APK | `27bab0fe…ee7a2a32` |
+| native-split | `config.arm64_v8a.apk` | `2033ccd1…7ec33c5d` |
+| `lib/arm64-v8a/libapp.so` (Flutter/Dart) | in de native-split | `ef3cee8f…d2047c84` |
+
+Gereedschap: `unzip` om de splits te openen, `strings` voor de symbolen, en `jadx` voor de
+leesbare Kotlin-broncode uit `classes.dex`. Let op het verschil tussen de twee bestanden:
+`classes.dex` is Kotlin en decompileert met `jadx` naar leesbare methodes; `libapp.so` is Dart,
+vooraf gecompileerd naar native code, dus daar zijn alleen de symbol- en stringnamen leesbaar,
+geen broncoderegels.
+
+Per bevinding, het commando dat de genoemde symbolen toont:
+
+**F-01 (chip-upload en datamodel)**
+
+```
+strings classes.dex | grep -E 'nfc\.mrtd|ExternalOnboardingConnector|okhttp/4'
+strings libapp.so   | grep -E 'datagroup_[0-9]+_data|MrtdCard|icao_card.dart'
+```
+
+**F-02 (geen apart BSN-veld, wel de ruwe MRZ)**
+
+```
+strings libapp.so | grep -E 'document_number|date_of_birth|expiry_date|nationality_country_code'
+strings libapp.so classes.dex | grep -iE 'personal_number|personalNumber|optional_data'   # geen resultaat
+strings classes.dex | grep -E 'dataGroup1\.bin'
+```
+
+**F-03 (server-side profiel)**
+
+```
+strings classes.dex | grep -E 'OnboardingResponse|handleOnboardingServiceResponse|PersonService'
+```
+
+**F-04 (consenttekst)**
+
+```
+strings libapp.so | grep 'deel je jouw gegevens'
+```
+
+**F-05 (poort en toegangscode)**
+
+```
+strings libapp.so | grep -E '_buildAccessCode|checkValidityCard|BarcodeStatus'
+```
+
+**F-06 (Firebase-init en consent)**
+
+```
+strings classes.dex | grep -E 'FirebaseInstallationsRegistrar|FirebaseAnalyticsHostApi.setConsent'
+```
+
+**F-09 (gedeelde componenten van de vloot)**
+
+```
+strings classes.dex | grep -E 'siip_flutter_bridge|fan_shell'
+```
+
+**F-11 (PSV: identiteitsmodule en locatie-SDK)**
+
+```
+strings classes*.dex | grep -E 'androidunityinterface\.services|cisco\.or\.sdk'   # uit de nl.psv-APK
+```
+
+Voor de leesbare methode-bodies van de Kotlin-symbolen (F-01, F-03, F-06, F-11): open
+`classes.dex` in `jadx` en navigeer naar de genoemde class. Voor de Dart-symbolen (F-02, F-04,
+F-05) is alleen de symbol- en stringpresentie leesbaar, wat volstaat om vast te stellen dat
+het veld of de tekst in de app aanwezig is.
