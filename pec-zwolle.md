@@ -190,3 +190,21 @@ Los van de app laden de ticketwebsites al volgtechnologie vóór toestemming.
 
 Dit is een zelfstandige bevinding op de web-laag, met een gewone browser-scan te
 reproduceren, los van de app en de chip.
+
+## Wat nog open staat
+
+De grenzen van het bewijs, scherp gehouden. Deze punten zijn gemeten noch weerlegd:
+
+- **Bewaartermijn en inzage.** De upload is gemeten. Hoelang Siip de bestanden bewaart, en
+  of ze in te zien zijn of versleuteld liggen met een sleutel die alleen de gebruiker
+  heeft, vergt een controle op een schone herinstallatie. Het draaiboek daarvoor ligt klaar.
+- **De advertentie-ID (AD_ID).** De app heeft de permissie (`AD_ID`,
+  `ACCESS_ADSERVICES_AD_ID`) en de plumbing (`google_signals`, `_npa`) aan boord. Of de
+  waarde ook echt wordt verzonden, is op de emulator niet te meten (die heeft geen Play-ad-id)
+  en vergt een native capture op het toestel.
+- **De poort en profilering daar.** Aan de poort biedt de app een machine-leesbare
+  toegangscode aan (`_buildAccessCode`, plus de QR- en streepjescode-generatoren). De
+  beslissing om toegang te verlenen of te weigeren gebeurt server-side of in de
+  scanner-infrastructuur, buiten de app. Client-side is er geen persoonsgebonden weigering
+  (geen stadionverbod- of blacklist-logica) aangetroffen; wat er op de server aan de poort
+  gebeurt, is in de app zelf niet aan te tonen en niet te weerleggen.
