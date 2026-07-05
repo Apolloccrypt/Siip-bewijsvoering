@@ -13,6 +13,9 @@ Het doel is transparantie. Iedereen kan de technische bevindingen zelf naslaan,
 de gemeten datastromen stap voor stap volgen, en de vaste bewijs-artefacten tegen
 hun SHA-256 controleren. De conclusies in de artikelen rusten op wat hier staat.
 
+Het volledige, gestructureerde onderzoeksrapport met genummerde bevindingen, ernst, bewijs,
+reproductie en impact staat in **[`rapport.md`](rapport.md)**.
+
 ## De bevinding staat vast; de waarden staan hier niet
 
 Voor alle duidelijkheid: het onderzoek toont juist **aan** dat het burgerservicenummer,
@@ -75,14 +78,12 @@ De daadwerkelijk onderschepte data, geen beschrijving ervan, staat in
 Zie [`bewijs/LEESMIJ.md`](bewijs/LEESMIJ.md) voor hoe deze tegen de verzegelde originelen
 te controleren zijn.
 
-## Toelichting per app
+## Inhoud
 
 | Bestand | Onderwerp |
 |---|---|
-| [`methodologie.md`](methodologie.md) | Hoe er is gemeten: statische analyse en de in-process TLS-tap zonder man-in-the-middle. |
-| [`pec-zwolle.md`](pec-zwolle.md) | PEC Zwolle-app: de onboarding-upload op veldniveau, de MRZ-structuur, het server-profiel, de web-ticketlaag. |
-| [`psv.md`](psv.md) | PSV-app: dezelfde Siip-identiteitspijplijn, plus wallet, advertentie-stack en de Cisco-locatie-SDK. |
-| [`siip-platform.md`](siip-platform.md) | Het platform en de vloot: het white-label sjabloon, de gedeelde infrastructuur en de differentiële pinning. |
+| [`rapport.md`](rapport.md) | Het volledige onderzoeksrapport: bevindingen (F-01 e.v.) met ernst, bewijs, reproductie en impact. |
+| [`bewijs/`](bewijs/) | De daadwerkelijk afgevangen bestanden, geredacteerd. |
 | [`terminologie.md`](terminologie.md) | De vaktermen en afkortingen in gewone taal. |
 | [`SHA256SUMS.txt`](SHA256SUMS.txt) | De SHA-256 van de bestanden en de verzegelde originelen. |
 

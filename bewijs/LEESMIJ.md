@@ -24,5 +24,5 @@ persoonsgegevens verwijderd.
 De redactie is aan de bron: waar in `onboarding-upload.txt` staat `[WEGGELAKT: 93 byte,
 ruwe MRZ (DG1), met het BSN]`, zaten in het origineel op precies die plek 93 bytes ruwe
 machineleesbare zone, met daarin het burgerservicenummer. De bytegroottes komen
-één-op-één overeen met wat in de artikelen en in [`../pec-zwolle.md`](../pec-zwolle.md)
+één-op-één overeen met wat in de artikelen en in [`../rapport.md`](../rapport.md)
 staat.
