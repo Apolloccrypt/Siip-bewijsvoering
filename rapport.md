@@ -99,6 +99,13 @@ MrtdCard.fromJson
 package:siip_flutter_bridge/src/models/onboarding/cards/icao_card.dart
 ```
 
+**Waar in de code.** De chip wordt uitgelezen in de native Kotlin-laag
+`io.siip.packages.plugin.nfc.mrtd` (`cards.elementaryFiles.ElementaryFile`,
+`cards.icaoCard.IcaoCard`), die de datagroepen als losse bestanden neerzet
+(`dataGroup1.bin`, `dataGroup2.bin`, ...). Het versturen loopt via
+`ExternalOnboardingService.handleSendDocumentToSession` en `ExternalOnboardingConnector`
+over `okhttp/4.12.0` naar `onboarding.siip.io`.
+
 **Reproductie.** Tijdens de registratie het eigen verkeer meelezen met een in-process hook
 op `libssl.so` `SSL_write`/`SSL_read`, gefilterd op `siip.io`, en de multipart-body uit de
 HTTP/2 DATA-frames reassembleren.
@@ -133,6 +140,28 @@ Regel 2, veld voor veld:
 
 Het gemeten personal-number-veld is een negencijferig getal dat de elfproef doorstaat, en
 is dus aantoonbaar een BSN, geen willekeurige reeks.
+
+**Waar in de code.** Dit is het scherpste punt, en het is subtieler dan een `sendBSN()`.
+Het BSN heeft geen eigen veld. De MRZ-parser leest wel benoemde velden uit, maar er is geen
+personal-number- of BSN-veld:
+
+```
+$ strings -n4 libapp.so | grep -E 'document_number|date_of_birth|expiry_date|nationality_country_code'
+document_number
+date_of_birth
+expiry_date
+nationality_country_code
+
+$ strings libapp.so classes.dex | grep -iE 'personal_number|personalNumber|optional_data'
+(geen resultaat)
+```
+
+De volledige ruwe zone wordt als één buffer gelezen (`datagroup_1_data` in het Flutter-model,
+`dataGroup1.bin` in de native laag) en integraal meegestuurd als het `dataGroup1`-part van de
+upload. Het BSN reist dus mee omdat de ruwe DG1-buffer ongefilterd wordt geüpload, niet omdat
+de app het BSN apart uitleest of adresseert. Een stap die het personal-number-veld weglaat of
+maskeert vóór verzending, ontbreekt. Dat is precies wat het rapport waar Siip naar verwijst
+juist aanraadt.
 
 **Impact.** Een uniek overheidsnummer bij een private partij vergroot het risico op
 koppeling en identiteitsfraude.
@@ -170,6 +199,12 @@ waarden gemaskeerd:
 }
 ```
 
+**Waar in de code.** Het antwoord wordt gedeserialiseerd door
+`OnboardingConnector.handleOnboardingServiceResponse` in het model
+`OnboardingResponse(organizationUserId=...)`; profiel- en adresmutaties lopen via
+`PersonService` (o.a. `handleUpdateAddress`). De velden `organizationUserId`,
+`scopedPersonData` en `photoJpeg` komen daaruit.
+
 **Impact.** Er ontstaat een centraal identiteitsprofiel met naam, geboortedatum en
 gezichtsfoto. Een datalek raakt dan precies die gegevens.
 
@@ -193,6 +228,10 @@ $ strings -n4 libapp.so | grep 'deel je jouw gegevens'
 Niet genoemd, wel verzonden: documentnummer, BSN, nationaliteit, de volledige ruwe MRZ en
 het SOD.
 
+**Waar in de code.** De opsomming van vijf velden is een hardcoded stringconstante in
+`libapp.so`, in het Flutter-onboardingscherm. De feitelijk verzonden set (zie F-01) wijkt
+daarvan af; er is geen code die de getoonde set en de verzonden set gelijktrekt.
+
 **Aanknopingspunt.** Transparantieplicht (art. 13/14 AVG).
 
 ---
@@ -214,6 +253,11 @@ gekocht of geaccepteerd.
 10:19:04Z  mail.siip.io         e-mailverificatie
 10:20:15Z  ticketing.siip.io    pas hierna: ticketweergave ophalen (geen aankoop)
 ```
+
+**Waar in de code.** De toegangscode wordt client-side opgebouwd in `_buildAccessCode`; de
+kaartgeldigheid via `checkValidityCard` (`onboarding_checkValidityCard`) en `BarcodeStatus`.
+De ticket-calls (`TicketService` naar `ticketing.siip.io`) staan los van, en ná, de
+onboarding-calls; geen ticket stuurt de identiteitsupload aan.
 
 **Aanknopingspunt.** Noodzaak voor de uitvoering van een ticket-/toegangsovereenkomst
 (art. 6(1)(b) AVG) valt weg, want die overeenkomst is er niet.
@@ -239,6 +283,12 @@ meetberichten naar Google. Consent Mode v2 ontbreekt.
       gcs / _dma    afwezig   ->   geen Consent Mode v2
 ```
 
+**Waar in de code.** Firebase initialiseert bij app-start via `FirebaseInstallationsRegistrar`
+(`firebaseInstallations.id`, plus GA4). De Firebase-Analytics-plugin biedt wel
+`FirebaseAnalyticsHostApi.setConsent`, maar in het gemeten verkeer ontbreken de
+consent-signalen (`gcs`/`_dma`), dus er wordt geen toestemmingsstand doorgegeven. De init
+gebeurt automatisch bij het opstarten, vóór de eerste toestemmingsstap.
+
 **Aanknopingspunt.** Toestemmingseis (art. 6 AVG) en art. 11.7a Telecommunicatiewet;
 doorgifte naar de VS (art. 44 e.v. AVG).
 
@@ -252,6 +302,10 @@ doorgifte naar de VS (art. 44 e.v. AVG).
 
 **Bevinding.** Op het toestel gaat foutrapportage naar Sentry, vóór toestemming. Op
 verbindingsniveau (SNI) vastgesteld; de payload zat achter TLS en is niet gelezen.
+
+**Waar in de code.** De Sentry-SDK is in de app aanwezig en initialiseert bij app-start; de
+bestemming (de Sentry-DSN) staat als constante in de binary. Alleen de verbinding (SNI) is
+waargenomen, niet de inhoud.
 
 ---
 
@@ -273,6 +327,10 @@ Acht volg-cookies gezet vóór enige keuze.
 **Reproductie.** Een headless browser-scan in drie standen (zonder interactie, na weigeren,
 na accepteren) en de cookies plus uitgaande verzoeken vergelijken.
 
+**Waar in de code.** Dit zit niet in de app-binary maar in de broncode van de ticketwebsites
+zelf: de Google Tag Manager-, Analytics- en Meta-pixel-snippets die de pagina's laden vóór
+toestemming. Zichtbaar in de paginabron en het netwerkverkeer.
+
 **Aanknopingspunt.** Art. 11.7a Telecommunicatiewet.
 
 ---
@@ -288,6 +346,11 @@ varianten van hetzelfde white-label sjabloon. FC Eindhoven en PEC delen byte-ide
 onboarding-code, dezelfde `*.siip.io`-hosts, de byte-identieke datagroep-set, en hetzelfde
 Sentry-project (organisatie `o4505158983942144`, project `4507100765093888`). Elke club
 heeft een eigen Firebase-project. Een ontwerpkeuze werkt daardoor platform-breed door.
+
+**Waar in de code.** De gedeelde componenten zijn `fan_shell` en `siip_flutter_bridge` plus
+dezelfde `io.siip.packages.plugin.nfc.mrtd`-laag. De byte-identieke Sentry-DSN (project
+`4507100765093888`) staat als constante in beide apps. Het pakketnaam-patroon
+`io.siip.saas.<club>` bevestigt de vloot op Google Play.
 
 De PSV-app is een aparte constructie met dezelfde Siip-module ingebouwd (zie F-11).
 
@@ -308,6 +371,9 @@ De PSV-app is een aparte constructie met dezelfde Siip-module ingebouwd (zie F-1
 onboarding.siip.io  ->  CNAME  ingress-siip-...eu-west-1.elb.amazonaws.com
                         A       18.203.37.152 , 46.51.174.148   (AWS eu-west-1)
 ```
+
+**Waar in de code.** Niet in de app-code maar in DNS: de CNAME-resolutie van de
+`*.siip.io`-hosts wijst de werkelijke bestemming aan. Reproduceerbaar met een DNS-lookup.
 
 **Impact / aanknopingspunt.** De data staat fysiek in de EU, maar bij een Amerikaanse
 aanbieder, en valt binnen het bereik van de CLOUD Act.
@@ -340,6 +406,13 @@ De Cisco-SDK provisioneert een wifi-profiel en koppelt de identiteit eraan
 (`AssociateUserService`, `installNetworkProfile`). De advertentie-stack omvat AdMob, Criteo,
 AppsFlyer, Amazon APS en Meta Audience Network. PSV heeft wel een Didomi-toestemmingsplatform,
 waar PEC dat niet had.
+
+**Waar in de code.** De Siip-module zit in de namespace
+`io.siip.packages.plugin.androidunityinterface.services` (`OnboardingService`,
+`PersonService`, `AuthService`, `LoginWithSiipService`, `WalletService`, `CiscoService`). De
+locatie-SDK is `com.cisco.or.sdk`, met onder meer `services.AssociateUserService` en
+`services.DeleteProfileService`. Dezelfde datagroep- en profielvelden als bij PEC komen in de
+binaries voor.
 
 **Open.** De payload van PSV loopt over een eigen TLS-laag (UnityTls) en is niet los
 afgevangen; de identieke module en endpoints maken de PEC-meting hier van toepassing. Of de
