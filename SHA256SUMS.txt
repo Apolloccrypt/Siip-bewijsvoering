@@ -1,0 +1,17 @@
+# SHA-256 van de vaste bewijs-artefacten bij het Siip / PDT-onderzoek.
+#
+# De met (verzegeld) gemarkeerde bestanden bevatten ongemaskeerde persoonsgegevens en
+# zijn NIET in deze repository opgenomen. Hun hash staat hier zodat een onder tijdstempel
+# bewaarde kopie later tegen deze waarde te controleren is, zonder de inhoud te publiceren.
+#
+# De hashlijst van de oorspronkelijke meting is met OpenTimestamps in de Bitcoin-blockchain
+# verankerd (MANIFEST-20260702.sha256.ots), zodat de meetdatum onafhankelijk vaststaat.
+
+294b82eec8e22027696e7f04edad29ac4c460960b64060441807f32efbed8bb2  pec-zwolle-app-2.1.1.apk
+ce4132b66994c9b00def7a5ea04aa556b87329bc8f3eb4e3c7c6028ad04c70aa  capture_native.js
+135d121e4a21793c773018345a643e1e0e5e4ccf6ee7b6bf26cde3376f066799  capture.py
+
+# Verzegeld, niet publiek (ongemaskeerde persoonsgegevens):
+8f60413421bfd8fd376c1b8ca8a94b46c4c0215664187105a2ea044143487aa0  onboarding_capture_siip_raw_20260702.jsonl  (verzegeld)
+78b6d7b61724d2915d6a9b55b7ca9f9d361eb70ba199f2954ea8e20b7e815583  onboarding_response_profile_20260702.bin    (verzegeld)
+776ac2b3f5db8bfc29efe43bb17d9e1ae911c9f377f58a35e08e8359b49753ef  photoFile_DG2_raw.bin                        (verzegeld)
