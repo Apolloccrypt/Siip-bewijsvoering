@@ -89,7 +89,7 @@ herkenning is niet aantoonbaar.
 
 ## Open
 
-- Welke datagroepen daadwerkelijk vertrekken bij PSV (het model draagt DG1–15; de
+- Welke datagroepen daadwerkelijk vertrekken bij PSV (het model draagt DG1 t/m 15; de
   bewezen PEC-upload bevatte DG1, DG2 en het SOD). Vereist een on-device payload-capture
   op de UnityTls-laag.
 - De consent-timing van de advertentie- en locatie-SDK's ten opzichte van Didomi.

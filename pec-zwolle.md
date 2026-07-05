@@ -12,9 +12,9 @@ benoemde onderdelen in de upload:
 ```
 POST https://onboarding.siip.io/api/            multipart/form-data, HTTP/2, TLS 1.3
 
-  part  photoFile     application/octet-stream   14.869 byte    DG2 — de gezichtsfoto uit de chip (JPEG2000)
-  part  dataGroup1    application/octet-stream       93 byte    DG1 — de volledige ruwe MRZ, met het BSN
-  part  efSodFile     application/octet-stream    2.664 byte    SOD — het Document Security Object (staatshandtekening)
+  part  photoFile     application/octet-stream   14.869 byte    DG2, de gezichtsfoto uit de chip (JPEG2000)
+  part  dataGroup1    application/octet-stream       93 byte    DG1, de volledige ruwe MRZ, met het BSN
+  part  efSodFile     application/octet-stream    2.664 byte    SOD, het Document Security Object (staatshandtekening)
   part  deviceId                                                 toestel-binding
   part  publicKey                                                toestel-sleutel
   part  appBundleId                                              io.siip.saas.pec
@@ -40,15 +40,15 @@ Regel 1   P<NLD●●●●●●●●●●<<●●●●●●●●<●●�
 Regel 2   ●●●●●●●●●●NLD●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●<<●●
 
 Regel 2, veld voor veld:
-  posities  1–9    documentnummer            ●●●●●●●●●
+  posities  1 t/m 9    documentnummer            ●●●●●●●●●
   positie   10     controlecijfer
-  posities  11–13  nationaliteit             NLD
-  posities  14–19  geboortedatum             ●●●●●●
+  posities  11 t/m 13  nationaliteit             NLD
+  posities  14 t/m 19  geboortedatum             ●●●●●●
   positie   20     controlecijfer
   positie   21     geslacht                  ●
-  posities  22–27  vervaldatum               ●●●●●●
+  posities  22 t/m 27  vervaldatum               ●●●●●●
   positie   28     controlecijfer
-  posities  29–42  personal-number-veld  →   BSN (9 cijfers) ●●●●●●●●●   ← hier
+  posities  29 t/m 42  personal-number-veld  →   BSN (9 cijfers) ●●●●●●●●●   ← hier
   positie   43     controlecijfer
   positie   44     totaal-controlecijfer
 ```
@@ -73,7 +73,7 @@ gemaskeerd, sleutels echt:
   "issuingStateCode":   "NLD",
   "organizationUserId": "●●●●●●●●-●●●●-●●●●-●●●●-●●●●●●●●●●●●",
   "photoType":          "jpeg2000",
-  "photoJpeg":          "<base64-JPEG, ~20 kB — weggelaten>",
+  "photoJpeg":          "<base64-JPEG, ~20 kB, weggelaten>",
   "scopedPersonData":   { }
 }
 ```
@@ -106,8 +106,8 @@ De feitelijk verzonden set is breder. Per veld:
 | Nationaliteit | ja | **vastgesteld** (in DG1) | **nee** |
 | Volledige ruwe MRZ (DG1) | ja | **vastgesteld** (dataGroup1, 93 B) | **nee** |
 | Document Security Object (SOD) | ja | **vastgesteld** (efSodFile, 2.664 B) | **nee** |
-| deviceId + publicKey | – | **vastgesteld** | **nee** |
-| DG5 / DG6 / DG7 / DG11–15 | model draagt ze | niet in deze upload waargenomen | **nee** |
+| deviceId + publicKey | n.v.t. | **vastgesteld** | **nee** |
+| DG5 / DG6 / DG7 / DG11 t/m 15 | model draagt ze | niet in deze upload waargenomen | **nee** |
 
 Het model draagt de datagroepen DG1, DG2, DG5, DG6, DG7 en DG11 tot en met DG15. In de
 gemeten upload zaten DG1, DG2 en het SOD. De overige datagroepen zijn in deze meting niet

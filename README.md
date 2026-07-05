@@ -1,33 +1,37 @@
-# Siip / PDT — bewijsvoering
+# Siip / PDT: bewijsvoering
 
 Reproduceerbare en verifieerbare bewijsvoering bij het privacyonderzoek naar
 Persoonlijke Digitale Toegang (PDT) van Siip.
 
 Deze repository is de technische onderbouwing bij de volgende publicaties op mickbeer.com:
 
-- **Het onderzoek van 1 juli 2026** — [PEC Zwolle, FC Eindhoven, ADO en NAC willen je paspoort](https://mickbeer.com/artikelen/siip-pdt-pec-zwolle-paspoort-toegang/)
-- **Het addendum met wederhoor van 3 juli 2026** — [Bij registratie vertrekken je BSN en je pasfoto uit de chip naar de server van Siip](https://mickbeer.com/artikelen/siip-addendum-wederhoor/)
+- **Het onderzoek van 1 juli 2026**: [PEC Zwolle, FC Eindhoven, ADO en NAC willen je paspoort](https://mickbeer.com/artikelen/siip-pdt-pec-zwolle-paspoort-toegang/)
+- **Het addendum met wederhoor van 3 juli 2026**: [Bij registratie vertrekken je BSN en je pasfoto uit de chip naar de server van Siip](https://mickbeer.com/artikelen/siip-addendum-wederhoor/)
 - Toekomstige artikelen over hetzelfde onderwerp worden hier aangevuld.
 
 Het doel is transparantie. Iedereen kan de technische bevindingen zelf naslaan,
 de gemeten datastromen stap voor stap volgen, en de vaste bewijs-artefacten tegen
 hun SHA-256 controleren. De conclusies in de artikelen rusten op wat hier staat.
 
-## Geen persoonsgegevens in deze repository
+## De bevinding staat vast; de waarden staan hier niet
 
-Alle metingen zijn verricht op een eigen toestel, met een eigen account en een
-eigen identiteitsdocument, op eigen netwerkverkeer.
+Voor alle duidelijkheid: het onderzoek toont juist **aan** dat het burgerservicenummer,
+de volledige machineleesbare zone en de gezichtsfoto uit de chip worden verstuurd naar
+de server van Siip. Dat is de kern van de bevinding, niet iets wat ontbreekt.
 
-Deze repository bevat uitsluitend techniek: veldnamen, bestandsgroottes, MIME-types,
-endpoints, hashes en gemaskeerde structuur. Er staan **geen** burgerservicenummers,
-**geen** machineleesbare-zonegegevens, **geen** gezichtsfoto's en **geen** andere
-herleidbare persoonsgegevens in. Waar de structuur van een veld wordt getoond, zijn
-alle persoonlijke tekens vervangen door `●`.
+Wat deze repository bewust **niet** doet, is die persoonlijke waarden opnieuw publiceren.
+Het gaat om een eigen paspoort, en het echte BSN, de ruwe zonegegevens en de eigen
+gezichtsfoto horen niet op straat. Wat hier staat is de techniek eromheen: veldnamen,
+bestandsgroottes, MIME-types, endpoints, hashes en de structuur van elk veld, met de
+persoonlijke tekens vervangen door `●`. Zo is bijvoorbeeld te zien dát het BSN in het
+personal-number-veld van de MRZ zit en wordt meegestuurd, zonder dat het nummer zelf
+leesbaar is.
 
-De ruwe onderschepte bestanden zijn bewust **niet** opgenomen. Van elk verzegeld
-artefact staat alleen de SHA-256 in [`SHA256SUMS.txt`](SHA256SUMS.txt), zodat een
-onder tijdstempel bewaarde kopie later tegen die hash te controleren is zonder dat de
-inhoud openbaar hoeft te worden.
+De ruwe onderschepte bestanden, waarin de gegevens wél leesbaar staan, zijn verzegeld en
+niet openbaar. Van elk staat alleen de SHA-256 in [`SHA256SUMS.txt`](SHA256SUMS.txt).
+Wie een verzegelde kopie heeft, kan die tegen die hash controleren en zo vaststellen dat
+het om exact hetzelfde bewijs gaat. De hele bevinding is daarmee te verifiëren zonder dat
+er persoonsgegevens openbaar worden.
 
 ## Onderzoekspositie
 
@@ -50,10 +54,10 @@ juridische duiding staat als aanknopingspunt benoemd, niet als vaststaand oordee
 Elk punt in de documenten draagt een niveau, zodat waarneming en gevolgtrekking uit
 elkaar blijven:
 
-- **vastgesteld** — aangetoond met gedecodeerde payload of directe capture.
-- **op codeniveau vastgesteld** — aangetoond uit de app-binaries (ontwerp of gegevensmodel).
-- **afgeleid** — het gedrag of de architectuur impliceert het, de payload zelf is niet gezien.
-- **open** — niet beslist; de vervolgmeting staat benoemd.
+- **vastgesteld**: aangetoond met gedecodeerde payload of directe capture.
+- **op codeniveau vastgesteld**: aangetoond uit de app-binaries (ontwerp of gegevensmodel).
+- **afgeleid**: het gedrag of de architectuur impliceert het, de payload zelf is niet gezien.
+- **open**: niet beslist; de vervolgmeting staat benoemd.
 
 ## Inhoud
 

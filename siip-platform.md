@@ -12,7 +12,7 @@ De pakketnaam volgt het patroon `io.siip.saas.<club>`. Bevestigd in Google Play:
 FC Eindhoven en PEC Zwolle zijn naast elkaar gelegd:
 
 - identieke `fan_shell` en `siip_flutter_bridge`
-- byte-identieke datagroep-set {DG1, DG2, DG5, DG6, DG7, DG11–15}
+- byte-identieke datagroep-set {DG1, DG2, DG5, DG6, DG7, DG11 t/m 15}
 - identieke `*.siip.io`-hostenset (onboarding, iam, user, ticketing, mail, plus staging en scl)
 - dezelfde tracking-permissies, geen toestemmingsmodule (CMP)
 
